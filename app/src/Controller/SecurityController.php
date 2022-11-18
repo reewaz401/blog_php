@@ -24,6 +24,7 @@ class SecurityController extends AbstractController
             exit;
         }
         if ($user->passwordMatch($formPwd)) {
+            $_SESSION["user_id"]=$user->getId();
             $this->render("user/home.php", [
                 "message" => "je suis un message"
             ],
