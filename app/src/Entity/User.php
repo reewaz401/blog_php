@@ -14,7 +14,7 @@ class User extends BaseEntity implements UserInterface, PasswordProtectedInterfa
     private string $firstName;
     private string $lastName;
     private ?string $gender;
-    private array $roles = [];
+    private int $roles;
 
     /**
      * @return int
@@ -127,21 +127,33 @@ class User extends BaseEntity implements UserInterface, PasswordProtectedInterfa
     /**
      * @return array
      */
-    public function getRoles(): array
+    public function getRoles(): int
     {
-        $roles = $this->roles;
-        $roles[] = "ROLE_USER";
-        return $roles;
+        return $this->roles;
     }
 
     /**
-     * @param array $roles
+     * @param int $roles
      * @return User
      */
-    public function setRoles(array $roles): User
+    public function setRoles(int $roles): User
     {
         $this->roles = $roles;
         return $this;
+    }
+    /**
+     * @param string $password
+     * @return User
+     */
+    public function setPassword(string $password): User
+    {
+        $pass = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $pass;
+        return $this;
+    }
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 
     public function getHashedPassword(): string
@@ -151,6 +163,10 @@ class User extends BaseEntity implements UserInterface, PasswordProtectedInterfa
 
     public function passwordMatch(string $plainPwd): bool
     {
-        return true;
+        if (password_verify($plainPwd, $this->password)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
