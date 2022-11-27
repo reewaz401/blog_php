@@ -7,13 +7,13 @@ use App\Interfaces\UserInterface;
 
 class User extends BaseEntity implements UserInterface, PasswordProtectedInterface
 {
-    private ?int $id;
+    private ?int $id = 0;
     private string $username;
     private string $password;
     private string $email;
     private string $firstName;
     private string $lastName;
-    private ?string $gender;
+    private ?string $gender = "";
     private int $roles;
 
     /**
