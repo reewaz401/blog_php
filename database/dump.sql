@@ -11,8 +11,10 @@ CREATE TABLE IF NOT EXISTS User
 CREATE TABLE IF NOT EXISTS Post
 (
     id      INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    content TEXT,
+    content TEXT NOT NULL,
     user_id  INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+
     image TEXT
 );
 

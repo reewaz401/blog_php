@@ -14,7 +14,7 @@ var_dump($user_id);
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add post</title>
+    <title>Modify post</title>
 </head>
 
 <form action="/addPost" method = "post" enctype="multipart/form-data" style="border:1px solid #ccc">

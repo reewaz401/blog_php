@@ -46,12 +46,15 @@ class SecurityController extends AbstractController
 
         $userManager = new UserManager(new PDOFactory());
         $userMang = $userManager->insertUser($user);
-        $_SESSION["user_id"]=$value;
+        header('location:/');
+    }
+    #[Route('/home', name: "home", methods: ["GET"])]
+    public function home()
+    {
+
         $this->render("home.php", [
-            "posts" => $posts,
-            "trucs" =>  "from register",
-            "machin" => 42
-        ], "Sign Up");
+
+        ], "Home");
     }
     #[Route('/signup', name: "signup", methods: ["GET"])]
     public function signup()
@@ -70,7 +73,7 @@ class SecurityController extends AbstractController
     #[Route('/logout', name: "logout", methods: ["GET"])]
     public function logout()
     {
-        $_SESSION["user_id"] = "";
+       session_destroy();
         $this->render("signin.php", [
         ], "Sign In");
     }

@@ -6,7 +6,8 @@ use App\Factory\PDOFactory;
 use App\Manager\PostManager;
 use App\Manager\UserManager;
 use App\Route\Route;
-
+use App\Entity\Post;
+// session_start();
 class PostController extends AbstractController
 {
     #[Route('/', name: "homepage", methods: ["GET"])]
@@ -17,18 +18,61 @@ class PostController extends AbstractController
 
         $this->render("home.php", [
             "posts" => $posts,
-            "trucs" => "je suis une string",
-            "machin" => 42
         ], "Tous les posts");
     }
+
+    #[Route('/addPost', name: "addPost", methods: ["POST"])]
+    public function newPost()
+    {
+        $post = new Post();
+        $post->setTitle($_POST["title"]);
+        $post->setContent($_POST["content"]);
+        $post->setUser_id($_POST["user_id"]);
+       
+        $name_img=$_FILES['image']['name'];
+        $tmp_image=$_FILES['image']['tmp_name'];
+        $destination=$_SERVER['DOCUMENT_ROOT'].'/src/public_image/'.$name_img;
+        move_uploaded_file($tmp_image,$destination);
+        $post->setImage($name_img);
+
+        $postManager = new PostManager(new PDOFactory());
+        $userMang = $postManager->addPost($post);
+        $this->render("home.php", [
+          
+        ], "add post");
+    }
+    #[Route('/deletePost', name: "deletPost", methods: ["POST"])]
+    public function deletePost()
+    {
+        $post = new Post();
+        $id=$_POST['id'];
+        $id=(int) $id;
+
+        $post->setId($id);
+     
+        $postManager = new PostManager(new PDOFactory());
+        $userMang = $postManager->deletePost($id);
+        $this->render("home.php", [
+          
+        ], "delete post");
+    }
+    #[Route('/modifyPost', name: "modifyPost", methods: ["POST"])]
+    public function modifyPost()
+    {
+        $post = new Post();
+        $id=$_POST['id'];
+        $id=(int) $id;
+
+        $post->setId($id);
+     
+        $postManager = new PostManager(new PDOFactory());
+        $userMang = $postManager->deletePost($id);
+        $this->render("home.php", [
+          
+        ], "delete post");
+    }
    
-    /**
-     * @param $id
-     * @param $truc
-     * @param $machin
-     * @return void
-     */
-    #[Route('/addPost', name: "addPost", methods: ["GET"])]
+    #[Route('/addpost', name: "addPost", methods: ["GET"])]
     public function addPost()
     {
         $this->render("addPost.php", [
