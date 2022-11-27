@@ -15,7 +15,6 @@ class PostController extends AbstractController
     {
         $home = new PostManager(new PDOFactory());
         $posts = $home->getAllPosts();
-
         $this->render("home.php", [
             "posts" => $posts,
         ], "Tous les posts");

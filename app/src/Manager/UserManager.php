@@ -59,13 +59,13 @@ class UserManager extends BaseManager
         $_SESSION["roles"] =  $user->getRoles();
         
     }
-    public function deleteUser(User $user)
-    {
-        $query = $this->pdo->prepare("DELETE FROM User WHERE id = :id");
-        $query->bindValue("id", $user->getId(), \PDO::PARAM_STR);
-        $queryy = $query->execute();
+    // public function deleteUser(User $user)
+    // {
+    //     $query = $this->pdo->prepare("DELETE FROM User WHERE id = :id");
+    //     $query->bindValue("id", $user->getId(), \PDO::PARAM_STR);
+    //     $queryy = $query->execute();
 
-    }
+    // }
 
     public function deleteUser($userId)
     {

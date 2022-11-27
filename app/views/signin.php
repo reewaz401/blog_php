@@ -29,13 +29,12 @@
     <input type="text" placeholder="Enter user name" name="username" required>
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="psw" required>
-
   <br><br>
-
     <button type="submit" name="but_submit">Sign In</button>
   
   </div>
 </form>
+<button type="submit" name="but_submit"><a href="/signup">Sign Up</a></button>
 <body>
 </body>
 </html>

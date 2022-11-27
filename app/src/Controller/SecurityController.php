@@ -15,23 +15,22 @@ class SecurityController extends AbstractController
     {
         $formUsername = $_POST['username'];
         $formPwd = $_POST['psw'];
-
         $userManager = new UserManager(new PDOFactory());
         $user = $userManager->getByUsername($formUsername);
-
         if (!$user) {
             header("Location: /?error=notfound");
             exit;
         }
         if ($user->passwordMatch($formPwd)) {
             $_SESSION["user_id"]=$user->getId();
-            $this->render("user/home.php", [
-                "message" => "je suis un message"
-            ],
-                "titre de la page");
+            $_SESSION["roles"]=$user->getRoles();
+            header('Location:/');
+            exit;
+        }else{
+            header("Location: /?error=notfound");
+            exit;
         }
-        header("Location: /?error=notfound");
-        exit;
+   
 
     }
     #[Route('/registerUser', name: "registerUser", methods: ["POST"])]
@@ -46,12 +45,11 @@ class SecurityController extends AbstractController
 
         $userManager = new UserManager(new PDOFactory());
         $userMang = $userManager->insertUser($user);
-        header('location:/');
+        header('Location:/');
     }
     #[Route('/home', name: "home", methods: ["GET"])]
     public function home()
     {
-
         $this->render("home.php", [
 
         ], "Home");
@@ -104,8 +102,7 @@ class SecurityController extends AbstractController
         // $userManager = new UserManager(new PDOFactory());
         // $userMang = $userManager->modifyUser();
         $manger = new UserManager(new PDOFactory());
-        $user = $manger->getById(4);
-
+        $user = $manger->getById($_SESSION["user_id"]);
         $this->render("updateUser.php", [
             "user" => $user,
         ], "Modify");
@@ -114,7 +111,7 @@ class SecurityController extends AbstractController
     public function modifyUser()
     {
         $user = new User();
-        $user->setId(4);
+        $user->setId($_SESSION["user_id"]);
         $user->setUsername($_POST["username"]);
         $user->setPassword($_POST["psw"]);
         $user->setRoles($_POST["roles"]);

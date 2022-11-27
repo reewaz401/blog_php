@@ -3,10 +3,7 @@
 ?>
 
 <?php
-/** @var App\Entity\Post[] $posts */
-// foreach ($posts as $post) {
-//     echo $post->getContent();
-// }
+if($_SESSION["user_id"] == null) header("Location:/signin")
 
 ?>
 <!doctype html>
@@ -26,10 +23,12 @@
         <nav>
             <ul style="display: flex; list-style: none; justify-content: space-around;">
                  <li><a href="/">Home</a></li>
-                <li><a href="/addpost">Nouveau post</a></li>
-                <li><a href="/signin">sign in</a></li>
-                <li><a href="/signup">sign up</a></li>
-                <li><a href="/logout">logout</a></li>
+                <li><a href="/addpost">Nouveau Post</a></li>
+                <li><a href="/signin">Sign In</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="/updateUser">Update Profile</a></li>
+                
            
             </ul>
         </nav>
