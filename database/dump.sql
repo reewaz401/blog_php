@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS Post
 (
     id      INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     content TEXT,
-    author  INT NOT NULL,
+    user_id  INT NOT NULL,
     image TEXT
 );
 

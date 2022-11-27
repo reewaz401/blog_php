@@ -28,9 +28,11 @@ class PostController extends AbstractController
      * @param $machin
      * @return void
      */
-    #[Route('/post/{id}/{truc}/{machin}', name: "francis", methods: ["GET"])]
-    public function showOne($id, $truc, $machin)
+    #[Route('/addPost', name: "addPost", methods: ["GET"])]
+    public function addPost()
     {
-        var_dump($id, $truc);
+        $this->render("addPost.php", [
+
+        ], "Add post");
     }
 }

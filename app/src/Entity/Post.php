@@ -6,7 +6,8 @@ class Post extends BaseEntity
 {
     private int $id;
     private string $content;
-    private int $author;
+    private int $user_id;
+    private string $image;
 
     /**
      * @return int
