@@ -95,5 +95,33 @@ class SecurityController extends AbstractController
             "users" => $users,
         ], "Users");
     }
+    #[Route('/updateUser', name: "updateUser", methods: ["GET"])]
+    public function updateUser()
+    {
+        // $userManager = new UserManager(new PDOFactory());
+        // $userMang = $userManager->modifyUser();
+        $manger = new UserManager(new PDOFactory());
+        $user = $manger->getById(4);
+
+        $this->render("updateUser.php", [
+            "user" => $user,
+        ], "Modify");
+    }
+    #[Route('/modifyUser', name: "modifyUser", methods: ["POST"])]
+    public function modifyUser()
+    {
+        $user = new User();
+        $user->setId(4);
+        $user->setUsername($_POST["username"]);
+        $user->setPassword($_POST["psw"]);
+        $user->setRoles($_POST["roles"]);
+        $user->setEmail($_POST["email"]);
+        $user->setGender($_POST["gender"]);
+        $manger = new UserManager(new PDOFactory());
+        $manger->modifyUser($user);
+        $this->render("home.php", [
+            "user" => $user,
+        ], "Modify");
+    }
     
 }
