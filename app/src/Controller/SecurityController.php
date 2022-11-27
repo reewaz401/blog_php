@@ -74,7 +74,26 @@ class SecurityController extends AbstractController
         $this->render("signin.php", [
         ], "Sign In");
     }
-   
+    #[Route('/getAllUser', name: "getAllUser", methods: ["GET"])]
+    public function getAllUser()
+    {
+        $manger = new UserManager(new PDOFactory());
+        $users = $manger->getAllUsers();
+        $this->render("showUsers.php", [
+            "users" => $users,
+        ], "Users");
+    }
+    #[Route('/deleteUser', name: "deleteUser", methods: ["POST"])]
+    public function deleteUser()
+    {
+        $userManager = new UserManager(new PDOFactory());
+        $userMang = $userManager->deleteUser($_POST["id"]);
 
+        $manger = new UserManager(new PDOFactory());
+        $users = $manger->getAllUsers();
+        $this->render("showUsers.php", [
+            "users" => $users,
+        ], "Users");
+    }
     
 }

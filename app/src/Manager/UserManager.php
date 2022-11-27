@@ -48,4 +48,10 @@ class UserManager extends BaseManager
         $queryy = $query->execute();
         $_SESSION["user_id"] =  $this->pdo->lastInsertId();
     }
+    public function deleteUser($userId)
+    {
+        $query = $this->pdo->prepare("DELETE FROM User WHERE id =  $userId");
+        $query->execute();
+
+    }
 }
