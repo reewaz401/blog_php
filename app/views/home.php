@@ -43,10 +43,8 @@
                 echo ("<div style='text-align: center;'><h2 >".$post['title']."</h2><p>").$post['content'].'</p><img src="/src/public_image/'.$post['image'].'">';
                 if ($post['user_id']== $_SESSION['user_id']||$_SESSION['roles']==0) {
                     echo ("<form method='post' action='/deletePost'> <button type='submit' class='btn btn-danger btn-sm' name='id' value='".$post['id']."'>X</button> </form>");
-                    // echo ("<form method='post' action='./modifyPost.php>' <button type='submit' class='btn btn-secondary btn-sm' name='id' value='".$post['id']."'>Modifier</button></form></div>");
-                    echo ('<form action="post" action="./modifyPost.php"><button type="submit" class="btn btn-secondary btn-sm" name="id" value="'.$post["id"].'>Modifier</button></form></div>');
+                     echo ("<form method='post' action='/modifyPost'> <button type='submit' class='btn btn-secondary btn-sm' name='id' value='".$post['id']."'>Modifier</button></form></div>");
                 }
-                // echo $post['title'];
 
          }
         

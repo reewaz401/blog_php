@@ -37,13 +37,27 @@ class PostManager extends BaseManager
     }
     public function updatePost(Post $post, bool $getArray = false)
     {
-        $update = $this->db->prepare('UPDATE Post SET title = :title, content = :content, imageId = :imageId WHERE id =:id');
+        // $id=$_POST['id'];
+        $update = $this->pdo->prepare('UPDATE Post SET title = :title, image = :image, content = :content, image = :image WHERE id = :id');
         $update->bindValue(':title', htmlspecialchars( $post->getTitle()), \PDO::PARAM_STR);
         $update->bindValue(':content', nl2br(htmlspecialchars( $post->getContent())), \PDO::PARAM_STR);
-        $update->bindValue(':id',  $post->getUser_id(), \PDO::PARAM_INT);
-        $update->bindValue(':image',  $post->getImage(), \PDO::PARAM_INT);
+        $update->bindValue(':id',  $post->getId(), \PDO::PARAM_INT);
+        $update->bindValue(':image', $post->getImage(), \PDO::PARAM_STR);
 
         return $update->execute() ;
+    }
+    public function getPostById(int $id, bool $array = false)
+    {
+        $query = $this->pdo->prepare('SELECT * FROM Post WHERE id = :id');
+        $query->bindValue(':id', $id, \PDO::PARAM_INT);
+        $query->execute();
+
+        if ($array) {
+            return $query->fetchAll(\PDO::FETCH_ASSOC);
+        }
+
+        // $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, 'Entity\Post');
+        return $query->fetch();
     }
 
 }

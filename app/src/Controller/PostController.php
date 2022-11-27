@@ -13,8 +13,8 @@ class PostController extends AbstractController
     #[Route('/', name: "homepage", methods: ["GET"])]
     public function home()
     {
-        $manger = new PostManager(new PDOFactory());
-        $posts = $manger->getAllPosts();
+        $home = new PostManager(new PDOFactory());
+        $posts = $home->getAllPosts();
 
         $this->render("home.php", [
             "posts" => $posts,
@@ -41,6 +41,13 @@ class PostController extends AbstractController
           
         ], "add post");
     }
+    #[Route('/addpost', name: "addPost", methods: ["GET"])]
+    public function addPost()
+    {
+        $this->render("addPost.php", [
+
+        ], "Add post");
+    }
     #[Route('/deletePost', name: "deletPost", methods: ["POST"])]
     public function deletePost()
     {
@@ -64,19 +71,34 @@ class PostController extends AbstractController
         $id=(int) $id;
 
         $post->setId($id);
-     
+        $modifyPost = new PostManager(new PDOFactory());
+        $postOld = $modifyPost->getPostById($id);
+        $this->render("modifyPost.php", [
+            "post" => $postOld,
+          
+        ], "modify post");
+    }
+    #[Route('/upDatePost', name: "upDate", methods: ["POST"])]
+    public function upDate()
+    {
+        $post = new Post();
+        $post->setTitle($_POST["title"]);
+        $post->setContent($_POST["content"]);
+        $post->setId($_POST["postId"]);
+       
+        $name_img=$_FILES['image']['name'];
+        $tmp_image=$_FILES['image']['tmp_name'];
+        $destination=$_SERVER['DOCUMENT_ROOT'].'/src/public_image/'.$name_img;
+        move_uploaded_file($tmp_image,$destination);
+        $post->setImage($name_img);
+
         $postManager = new PostManager(new PDOFactory());
-        $userMang = $postManager->deletePost($id);
+        $userMang = $postManager->updatePost($post);
         $this->render("home.php", [
           
-        ], "delete post");
+        ], "update post");
     }
    
-    #[Route('/addpost', name: "addPost", methods: ["GET"])]
-    public function addPost()
-    {
-        $this->render("addPost.php", [
-
-        ], "Add post");
-    }
+  
+   
 }
