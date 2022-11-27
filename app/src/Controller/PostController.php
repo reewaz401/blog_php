@@ -21,7 +21,7 @@ class PostController extends AbstractController
             "machin" => 42
         ], "Tous les posts");
     }
-
+   
     /**
      * @param $id
      * @param $truc
